@@ -31,7 +31,7 @@ class Sqlinsert:
         try:
             cur.executemany(sql,self.v_list)
         except Exception as e:
-            print ("执行MySQL：%s时出错：%s"%(sql,e))
+            print ("执行MySQL时出错：%s"%(e))
         finally:
             cur.close()
             conn.close()
