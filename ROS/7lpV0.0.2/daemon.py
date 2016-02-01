@@ -11,8 +11,8 @@ class Daemon:
 	Usage: subclass the Daemon class and override the run() method
 	"""
 
-    def __init__(self, pidfile, stdin='/dev/null', stdout='/tmp/rosapi2x/test.log', stderr='/tmp/rosapi2x/err.log'):
-        # self.stdin = stdin
+    def __init__(self, pidfile, stdin='/tmp/rosapi2x/stdin.log', stdout='/tmp/rosapi2x/out.log', stderr='/tmp/rosapi2x/err.log'):
+        self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
         self.pidfile = pidfile
@@ -50,11 +50,11 @@ class Daemon:
 
         # redirect standard file descriptors
         sys.stdout.flush()
-        # sys.stderr.flush()
-        # si = file(self.stdin, 'r')
+        sys.stderr.flush()
+        si = file(self.stdin, 'r')
         so = file(self.stdout, 'a+')
         se = file(self.stderr, 'a+', 0)
-        # os.dup2(si.fileno(), sys.stdin.fileno())
+        os.dup2(si.fileno(), sys.stdin.fileno())
         os.dup2(so.fileno(), sys.stdout.fileno())
         os.dup2(se.fileno(), sys.stderr.fileno())
 

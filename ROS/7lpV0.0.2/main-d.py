@@ -22,17 +22,18 @@ dbpwd = conf.get('db_mysql', 'password')
 dbname = conf.get('db_mysql', 'db')
 dbtable = conf.get('db_mysql','table')
 
-v_list = 1234
 class MyDaemon(Daemon):
     def run(self):
 
         while True:
-            # gD = Getdata(host,port,user,pwd)
-            # v_list = gD.getdata()
-            print v_list
+            gD = Getdata(host,port,user,pwd)
+            v_list = gD.getdata()
+            vlist = v_list
+            # print v_list
 
-            # sI = Sqlinsert(dbhost,dbuser,dbpwd,dbport,dbname,dbtable,v_list)
-            # sI.sqlinsert()
+
+            sI = Sqlinsert(dbhost,dbuser,dbpwd,dbport,dbname,dbtable,vlist)
+            sI.sqlinsert()
             # time.sleep(2)
             # timenow = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
             # count = open('/tmp/count.txt','a')
@@ -47,18 +48,18 @@ class MyDaemon(Daemon):
 
 
 if __name__ == "__main__":
-	daemon = MyDaemon('/tmp/rosapi2x/daemon-example.pid')
-	if len(sys.argv) == 2:
-		if 'start' == sys.argv[1]:
-			daemon.start()
-		elif 'stop' == sys.argv[1]:
-			daemon.stop()
-		elif 'restart' == sys.argv[1]:
-			daemon.restart()
-		else:
-			print "Unknown command"
-			sys.exit(2)
-		sys.exit(0)
-	else:
-		print "usage: %s start|stop|restart" % sys.argv[0]
-		sys.exit(2)
+    daemon = MyDaemon('/tmp/rosapi2x/daemon-example.pid')
+    if len(sys.argv) == 2:
+        if 'start' == sys.argv[1]:
+            daemon.start()
+        elif 'stop' == sys.argv[1]:
+            daemon.stop()
+        elif 'restart' == sys.argv[1]:
+            daemon.restart()
+        else:
+            print "Unknown command"
+            sys.exit(2)
+        sys.exit(0)
+    else:
+        print "usage: %s start|stop|restart" % sys.argv[0]
+        sys.exit(2)

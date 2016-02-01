@@ -23,23 +23,9 @@ dbpwd = conf.get('db_mysql', 'password')
 dbname = conf.get('db_mysql', 'db')
 dbtable = conf.get('db_mysql','table')
 
-while True:
-    gd = Getdata(host,port,user,pwd)
-    v_list = gd.getdata()
-    print v_list
+
+gd = Getdata(host,port,user,pwd)
+v_list = gd.getdata()
+print v_list
 # sI = Sqlinsert(dbhost,dbuser,dbpwd,dbport,dbname,dbtable,v_list)
 # sI.sqlinsert()
-
-    # def __init__(self,r1Host="124.161.108.46",r1Port=20001,r1User="api",r1Pwd="api",cmd=""):
-    #     self.r1Host=r1Host
-    #     self.r1Port=r1Port
-    #     self.r1User=r1User
-    #     self.r1Pwd=r1Pwd
-    #
-    # def getdata(self):
-    #     '''从rosAPI获取数据'''
-    #     api1 = Core(self.r1Host, self.r1Port)
-    #     api1.login(self.r1User, self.r1Pwd)
-    #
-    #     '''获取hotspot数据'''
-    #     hptdata = (api1.response_handler(api1.talk(["/ip/hotspot/host/print"])))
