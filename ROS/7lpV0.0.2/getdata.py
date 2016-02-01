@@ -15,22 +15,22 @@ class Getdata:
     def getdata(self):
         '''从rosAPI获取数据'''
         try:
-            print 'connect ....'
+            # print 'connect ....'
             api1 = Core(self.r1Host, self.r1Port)
-            print 'connect ok'
-            print 'login ....'
+            # print 'connect ok'
+            # print 'login ....'
             api1.login(self.r1User, self.r1Pwd)
-            print 'login ok'
+            # print 'login ok'
 
             '''获取hotspot数据'''
-            print 'get hptdata ....'
+            # print 'get hptdata ....'
             hptdata = (api1.response_handler(api1.talk(["/ip/hotspot/host/print"])))
-            print 'get hptdata ok'
+            # print 'get hptdata ok'
 
             '''获取设备数据'''
-            print 'get device name .....'
+            # print 'get device name .....'
             devname = (api1.response_handler(api1.talk(['/sys/identity/print'])))
-            print 'get device name ok'
+            # print 'get device name ok'
 
             # print devname
 
@@ -48,7 +48,7 @@ class Getdata:
             print ("执行MySQL：%s时出错：%s"%(e))
 
         '''数据排版成需要的格式'''
-        print 'handles data....'
+        # print 'handles data....'
         for i in hptdata:
             vlist.append(timenow)
             vlist.append(devname[0]['name'])
@@ -60,6 +60,6 @@ class Getdata:
             vtuple = tuple(vlist)
             vlist = []
             VLIST.append(vtuple)
-        print 'handles data ok'
+        # print 'handles data ok'
 
         return VLIST

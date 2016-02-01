@@ -4,7 +4,7 @@
 import MySQLdb
 
 
-class Sqlinsert:
+class Sqldb:
 
     def __init__(self, dbHost, dbUser, dbPwd, dbPort, dbDb, dbTable, v_list):
         self.dbHost = dbHost
@@ -15,23 +15,35 @@ class Sqlinsert:
         self.dbTable = dbTable
         self.v_list = v_list
 
-    def sqlinsert(self):
-        conn = MySQLdb.connect(host=self.dbHost, \
+    def sqlLogin(self):
+        self.conn = MySQLdb.connect(host=self.dbHost, \
                                user=self.dbUser, \
                                passwd=self.dbPwd, \
                                db = self.dbDb,\
                                port=self.dbPort)
-        cur = conn.cursor()
-        cur.execute("show databases")
+        self.cur = self.conn.cursor()
+
+    def instData(self):
 
         sql = "insert into test2x (time,host,mac,DHCP,address,to_address,uptime,server,\
         bypassed,bridge_port,authroized,http_proxy,packets_out,\
         packets_in,bytes_out,bytes_in,found_by,\
         idle_timeout,idle_time,hostdead_time,idnum)  values(%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s)"
         try:
-            cur.executemany(sql,self.v_list)
+            self.cur.executemany(sql,self.v_list)
         except Exception as e:
             print ("执行MySQL时出错：%s"%(e))
-        finally:
-            cur.close()
-            conn.close()
+        self.closeCur()
+        self.closeSQL()
+
+    def instChk(self):
+        self.cur.execute('select count(*) from test2x')
+        self.cur.execute('INSERT INTO data_chk (7lp_xz_data_num) VALUE(%S)',\
+                         self.cur.fetchall())
+        self.closeCur()
+        self.closeSQL()
+
+    def closeCur(self):
+        self.cur.close()
+    def closeSQL(self):
+        self.conn.close()

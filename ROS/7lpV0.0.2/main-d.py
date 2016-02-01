@@ -4,7 +4,7 @@ import sys, time
 import ConfigParser, string
 from daemon import Daemon
 from getdata import Getdata
-from sqlinserte import Sqlinsert
+from sqlinserte import mysqldb
 
  # 准备配置文件
 conf = ConfigParser.ConfigParser()
@@ -32,8 +32,9 @@ class MyDaemon(Daemon):
             # print v_list
 
 
-            sI = Sqlinsert(dbhost,dbuser,dbpwd,dbport,dbname,dbtable,vlist)
-            sI.sqlinsert()
+            sI = mysqldb()
+            sI.sqlLogin(dbhost,dbuser,dbpwd,dbport,dbname,dbtable,vlist)
+            sI.instData()
             # time.sleep(2)
             # timenow = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
             # count = open('/tmp/count.txt','a')
