@@ -3,7 +3,8 @@
 import ConfigParser, string
 # from lib.daemon import Daemon
 from getdata import Getdata
-from sqlinserte import Sqlinsert
+from sqlinserte import Sqldb
+
 
 
 
@@ -24,8 +25,13 @@ dbname = conf.get('db_mysql', 'db')
 dbtable = conf.get('db_mysql','table')
 
 
-gd = Getdata(host,port,user,pwd)
-v_list = gd.getdata()
-print v_list
-# sI = Sqlinsert(dbhost,dbuser,dbpwd,dbport,dbname,dbtable,v_list)
-# sI.sqlinsert()
+gD = Getdata(host,port,user,pwd)
+v_list = gD.getdata()
+vlist = v_list
+# print v_list
+
+
+sI = Sqldb(dbhost,dbuser,dbpwd,dbport,dbname,dbtable,vlist)
+sI.sqlLogin()
+sI.instData()
+
